@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "asyncpraw-stubs"
+version = "0.0.1"
+description = "Python stubs for AsyncPRAW, a python package that allows for simple access to Reddit's API asynchronously."
+authors = ["Yoshikage Kira"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "asyncpraw-stubs", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+asyncpraw = "^7.7.1"
+asyncprawcore = "^2.4.0"
+
+
+[tool.poetry.group.typing.dependencies]
+pyright = "^1.1.356"
+mypy = "^1.9.0"
+
+[tool.poetry.group.linting.dependencies]
+black = "^23.3.0"
+ruff = "^0.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+strict = true
+check_untyped_defs = true
+disallow_any_generics = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+no_implicit_reexport = true
+ignore_missing_imports = true
+exclude = [".venv", "venv"]
+
+[tool.pyright]
+exclude = [".venv", "venv"]
+pythonVersion = "3.9"
+typeCheckingMode = "strict"
+reportPrivateUsage = false
+reportImportCycles = false
+reportIncompatibleMethodOverride = false
+reportWildcardImportFromLibrary = false
+
+[tool.black]
+line-length = 160
+
+[tool.ruff]
+line-length = 160
+
+[tool.ruff.lint]
+select = ["E", "F", "I001", "I002"]
+
+
