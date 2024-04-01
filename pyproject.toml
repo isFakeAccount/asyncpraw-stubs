@@ -6,6 +6,24 @@ authors = ["Yoshikage Kira"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "asyncpraw-stubs", from = "src" }]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/isFakeAccount/asyncpraw-stubs"
+Repository = "https://github.com/isFakeAccount/asyncpraw-stubs.git"
+Issues = "https://github.com/isFakeAccount/asyncpraw-stubs/issues"
+Readme = "https://github.com/isFakeAccount/asyncpraw-stubs/blob/master/README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
