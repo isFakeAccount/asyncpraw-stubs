@@ -30,14 +30,16 @@ def do_process(args: list[str], shell: bool = False, cwd: str = ".") -> bool:
 def run_static() -> bool:
     """Run the static tests.
 
-    Returns a statuscode of 0 if everything ran correctly. Otherwise, it will return statuscode 1
+    Returns a statuscode of 0 if everything ran correctly. Otherwise, it will return
+    statuscode 1
 
     """
     success = True
-    success &= do_process(["mypy", "."])
+    success &= do_process(["mypy", "src"])
     success &= do_process(["pyright"])
-    success &= do_process(["black", "."])
-    success &= do_process(["ruff", "check", ".", "--fix"])
+    success &= do_process(["black", "src"])
+    success &= do_process(["ruff", "check", "src", "--fix"])
+    success &= do_process(["docstrfmt", "."])
     return success
 
 
