@@ -5,12 +5,13 @@ description = "Python stubs for AsyncPRAW, a python package that allows for simp
 authors = ["Yoshikage Kira"]
 license = "MIT"
 readme = "README.md"
-packages = [{ include = "asyncpraw-stubs" }]
+packages = [{ include = "asyncpraw-stubs", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 asyncpraw = "^7.7.1"
 asyncprawcore = "^2.4.0"
+typing-extensions = "^4.10.0"
 
 
 [tool.poetry.group.typing.dependencies]
