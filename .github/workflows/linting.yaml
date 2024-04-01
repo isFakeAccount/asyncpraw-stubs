@@ -1,0 +1,24 @@
+name: Linting
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v3
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies and build package
+        run: |
+          poetry install
+
+      - name: Run pre-push script
+        run: poetry run python pre_push.py

@@ -11,6 +11,7 @@
             "program": "${workspaceFolder}/pre_push.py",
             "console": "integratedTerminal",
             "justMyCode": true,
+            "args": ["--static"]
         }
     ]
 }

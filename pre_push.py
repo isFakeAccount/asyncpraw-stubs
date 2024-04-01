@@ -1,6 +1,8 @@
 """Run static analysis on the project."""
+
 from __future__ import annotations
 
+import argparse
 import sys
 from subprocess import CalledProcessError, check_call
 
@@ -28,18 +30,31 @@ def do_process(args: list[str], shell: bool = False, cwd: str = ".") -> bool:
 
 
 def run_static() -> bool:
-    """Run the static tests.
+    """Run static analysis on the source code.
 
-    Returns a statuscode of 0 if everything ran correctly. Otherwise, it will return
-    statuscode 1
+    :returns: True if static analysis processes were successful, False otherwise.
+    :rtype: bool
 
     """
     success = True
     success &= do_process(["mypy", "src"])
     success &= do_process(["pyright"])
+
+    return success
+
+
+def run_linting() -> bool:
+    """Run linting checks on the source code.
+
+    :returns: True if all linting processes were successful, False otherwise.
+    :rtype: bool
+
+    """
+    success = True
     success &= do_process(["black", "src"])
     success &= do_process(["ruff", "check", "src", "--fix"])
     success &= do_process(["docstrfmt", "."])
+
     return success
 
 
@@ -49,10 +64,33 @@ def main() -> int:
     Run static and lint on code
 
     """
+
+    parser = argparse.ArgumentParser(description="Run static and/or unit-tests")
+    parser.add_argument(
+        "-s",
+        "--static",
+        action="store_true",
+        help="Do not run static tests (black/flake8/pydocstyle/sphinx-build)",
+        default=False,
+    )
+
+    parser.add_argument(
+        "-l",
+        "--linting",
+        action="store_true",
+        default=True,
+        help="Run the linting",
+    )
+
+    args = parser.parse_args()
     success = True
     try:
-        if success:
+        if args.static:
             success &= run_static()
+
+        if args.linting:
+            success &= run_linting()
+
     except KeyboardInterrupt:
         return int(not False)
     return int(not success)
