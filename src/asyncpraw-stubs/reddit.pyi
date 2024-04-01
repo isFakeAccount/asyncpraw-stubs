@@ -11,14 +11,27 @@ if TYPE_CHECKING:
     from .util.token_manager import BaseTokenManager
 
 class ConfigSettings(TypedDict):
+    client_id: str
+    client_secret: str
+    user_agent: str
+    
     check_for_updates: NotRequired[bool]
-    client_id: NotRequired[str]
-    client_secret: NotRequired[str]
+    comment_kind: NotRequired[str]
+    message_kind: NotRequired[str]
+    oauth_url: NotRequired[str]
+    password: NotRequired[str]
+    ratelimit_seconds: NotRequired[int]
+    reddit_url: NotRequired[str]
+    redditor_kind: NotRequired[str]
     redirect_uri: NotRequired[str]
     refresh_token: NotRequired[str]
-    password: NotRequired[str]
-    user_agent: NotRequired[str]
+    short_url: NotRequired[str]
+    submission_kind: NotRequired[str]
+    subreddit_kind: NotRequired[str]
+    timeout: NotRequired[int]
     username: NotRequired[str]
+    warn_comment_sort: NotRequired[bool]
+
 
 class Reddit:
     update_checked: bool
