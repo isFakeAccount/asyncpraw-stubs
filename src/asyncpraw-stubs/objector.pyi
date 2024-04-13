@@ -6,8 +6,7 @@ from .exceptions import RedditAPIException
 
 if TYPE_CHECKING:
     import asyncpraw
-
-    from .models.reddit.base import RedditBase
+    from asyncpraw.models.reddit.base import RedditBase
 
 class Objector:
     @classmethod

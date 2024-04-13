@@ -3,21 +3,36 @@
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING, Any, Optional, TypedDict
+from typing import IO, TYPE_CHECKING, Any, AsyncGenerator, Iterable, TypedDict
 
+import asyncprawcore.auth
+from asyncpraw import models
+from asyncpraw.exceptions import (
+    RedditAPIException,
+)
+from asyncpraw.models.util import deprecate_lazy
+from asyncpraw.util.deprecated_args import _deprecate_args
+from asyncprawcore.requestor import Requestor
 from typing_extensions import NotRequired, Unpack
 
 if TYPE_CHECKING:
+    import asyncpraw
+    import asyncpraw.models
     import asyncprawcore
 
     from .util.token_manager import BaseTokenManager
+
+Comment = models.Comment
+Redditor = models.Redditor
+Submission = models.Submission
+Subreddit = models.Subreddit
 
 class ConfigSettings(TypedDict):
     """Represents a configuration options that can be passed through initializer of the Reddit class."""
 
     client_id: str
     """The OAuth client ID associated with your registered Reddit application."""
-    client_secret: NotRequired[Optional[str]]
+    client_secret: NotRequired[str | None]
     """The OAuth client secret associated with your registered Reddit application. This option is required for all application types, however, the value must 
     be set to `None` for installed applications."""
     user_agent: str
@@ -60,7 +75,7 @@ class ConfigSettings(TypedDict):
 
 class Reddit:
     update_checked: bool
-    _ratelimit_regex: re.Pattern
+    _ratelimit_regex: re.Pattern[str]
 
     @property
     def _next_unique(self) -> int: ...
@@ -82,8 +97,126 @@ class Reddit:
         site_name: str | None = None,
         *,
         config_interpolation: str | None = None,
-        requestor_class: type[asyncprawcore.requestor.Requestor] | None = None,
+        requestor_class: type[Requestor] | None = None,
         requestor_kwargs: dict[str, Any] | None = None,
         token_manager: BaseTokenManager | None = None,
         **config_settings: Unpack[ConfigSettings],
     ) -> None: ...
+    def _check_for_update(self) -> None: ...
+    def _handle_rate_limit(self, exception: RedditAPIException) -> int | float | None: ...
+    async def _objectify_request(
+        self,
+        *,
+        data: dict[str, str | Any] | bytes | IO | str | None = None,  # type: ignore
+        files: dict[str, IO] | None = None,  # type: ignore
+        json: dict[Any, Any] | list[Any] | None = None,
+        method: str = "",
+        params: str | dict[str, str] | None = None,
+        path: str = "",
+    ) -> Any: ...
+    def _prepare_asyncprawcore(
+        self,
+        *,
+        requestor_class: type[Requestor] | None = None,
+        requestor_kwargs: Any | None = None,
+    ) -> Requestor: ...
+    def _prepare_common_authorizer(self, authenticator: asyncprawcore.auth.BaseAuthenticator) -> None: ...
+    def _prepare_objector(self) -> None: ...
+    def _prepare_trusted_asyncprawcore(self, requestor: Requestor) -> None: ...
+    def _prepare_untrusted_asyncprawcore(self, requestor: Requestor) -> None: ...
+    async def close(self) -> None: ...
+    async def _resolve_share_url(self, url: str) -> str: ...
+    @_deprecate_args("id", "url", "fetch")
+    @deprecate_lazy
+    async def comment(
+        self,
+        id: str | None = None,
+        *,
+        fetch: bool = True,
+        url: str | None = None,
+        **_: Any,
+    ) -> models.Comment: ...
+    @_deprecate_args("path", "data", "json", "params")
+    async def delete(
+        self,
+        path: str,
+        *,
+        data: dict[str, str | Any] | bytes | IO | str | None = None,  # type: ignore
+        json: dict[Any, Any] | list[Any] | None = None,
+        params: str | dict[str, str] | None = None,
+    ) -> Any: ...
+    def domain(self, domain: str) -> models.DomainListing: ...
+    @_deprecate_args("path", "params")
+    async def get(
+        self,
+        path: str,
+        *,
+        params: str | dict[str, str | int] | None = None,
+    ) -> Any: ...
+    @_deprecate_args("fullnames", "url", "subreddits")
+    def info(
+        self,
+        *,
+        fullnames: Iterable[str] | None = None,
+        subreddits: Iterable[asyncpraw.models.Subreddit | str] | None = None,
+        url: str | None = None,
+    ) -> AsyncGenerator[asyncpraw.models.Subreddit | asyncpraw.models.Comment | asyncpraw.models.Submission, None,]: ...
+    @_deprecate_args("path", "data", "json")
+    async def patch(
+        self,
+        path: str,
+        *,
+        data: dict[str, str | Any] | bytes | IO | str | None = None,
+        json: dict[Any, Any] | list[Any] | None = None,
+        params: str | dict[str, str] | None = None,
+    ) -> Any: ...
+    @_deprecate_args("path", "data", "files", "params", "json")
+    async def post(
+        self,
+        path: str,
+        *,
+        data: dict[str, str | Any] | bytes | IO | str | None = None,
+        files: dict[str, IO] | None = None,
+        json: dict[Any, Any] | list[Any] | None = None,
+        params: str | dict[str, str] | None = None,
+    ) -> Any: ...
+    @_deprecate_args("path", "data", "json")
+    async def put(
+        self,
+        path: str,
+        *,
+        data: dict[str, str | Any] | bytes | IO | str | None = None,
+        json: dict[Any, Any] | list[Any] | None = None,
+    ) -> Any: ...
+    @_deprecate_args("nsfw")
+    async def random_subreddit(self, *, nsfw: bool = False) -> asyncpraw.models.Subreddit: ...
+    @_deprecate_args("name", "fullname", "fetch")
+    async def redditor(
+        self,
+        name: str | None = None,
+        *,
+        fetch: bool = False,
+        fullname: str | None = None,
+    ) -> asyncpraw.models.Redditor: ...
+    @_deprecate_args("method", "path", "params", "data", "files", "json")
+    async def request(
+        self,
+        *,
+        data: dict[str, str | Any] | bytes | IO | str | None = None,
+        files: dict[str, IO] | None = None,
+        json: dict[Any, Any] | list[Any] | None = None,
+        method: str,
+        params: str | dict[str, str | int] | None = None,
+        path: str,
+    ) -> Any: ...
+    @_deprecate_args("id", "url", "fetch")
+    @deprecate_lazy
+    async def submission(
+        self,
+        id: str | None = None,
+        *,
+        fetch: bool = True,
+        url: str | None = None,
+        **_,
+    ) -> asyncpraw.models.Submission: ...
+    async def username_available(self, name: str) -> bool: ...

@@ -30,6 +30,7 @@ python = "^3.9"
 asyncpraw = "^7.7.1"
 asyncprawcore = "^2.4.0"
 typing-extensions = "^4.10.0"
+asyncprawcore-stubs = "^0.0.1"
 
 
 [tool.poetry.group.typing.dependencies]
