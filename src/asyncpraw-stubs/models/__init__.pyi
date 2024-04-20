@@ -1,8 +1,8 @@
-from .listing.domain import DomainListing
-from .reddit.comment import Comment
-from .reddit.redditor import Redditor
-from .reddit.submission import Submission
-from .reddit.subreddit import Subreddit
+from asyncpraw.models.listing.domain import DomainListing
+from asyncpraw.models.reddit.comment import Comment
+from asyncpraw.models.reddit.redditor import Redditor
+from asyncpraw.models.reddit.submission import Submission
+from asyncpraw.models.reddit.subreddit import Subreddit
 
 __all__ = [
     "Comment",
