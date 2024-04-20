@@ -2,6 +2,6 @@
 
 from __future__ import annotations
 
-from ...base import AsyncPRAWBase
+from asyncpraw.models.base import AsyncPRAWBase
 
 class BaseListingMixin(AsyncPRAWBase): ...
