@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Callable, TypeVar
 
-def deprecate_lazy(func: Callable[..., Any]) -> Callable[..., Any]: ...
+from typing_extensions import ParamSpec
+
+Param = ParamSpec("Param")
+RetType = TypeVar("RetType")
+
+def deprecate_lazy(func: Callable[Param, RetType]) -> Callable[Param, RetType]: ...

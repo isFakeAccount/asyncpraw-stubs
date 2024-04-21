@@ -7,14 +7,14 @@ from typing import TYPE_CHECKING
 from asyncpraw.util.deprecated_args import _deprecate_args
 
 if TYPE_CHECKING:
-    import asyncpraw
+    from asyncpraw.models import Subreddit
 
 class MessageableMixin:
     @_deprecate_args("subject", "message", "from_subreddit")
     async def message(
         self,
         *,
-        from_subreddit: asyncpraw.models.Subreddit | str | None = None,
+        from_subreddit: Subreddit | str | None = None,
         message: str,
         subject: str,
     ) -> None: ...

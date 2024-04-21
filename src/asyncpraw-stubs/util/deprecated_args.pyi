@@ -1,6 +1,14 @@
 """Positional argument deprecation decorator."""
+
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Callable, TypeVar
 
-def _deprecate_args(*old_args: str) -> Callable[..., Any]: ...
+from typing_extensions import ParamSpec
+
+PT = ParamSpec("PT")
+RT = TypeVar("RT")
+
+def _deprecate_args(
+    *old_args: str,
+) -> Callable[[Callable[PT, RT]], Callable[PT, RT]]: ...

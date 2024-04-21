@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from typing import IO, TYPE_CHECKING, Any, AsyncGenerator, Iterable, TypedDict
+from typing import IO, TYPE_CHECKING, Any, AnyStr, AsyncGenerator, Iterable, TypedDict
 
 import asyncprawcore.auth
 from asyncpraw import models
@@ -166,7 +166,7 @@ class Reddit:
         self,
         path: str,
         *,
-        data: dict[str, str | Any] | bytes | IO | str | None = None,
+        data: dict[str, str | Any] | bytes | IO[AnyStr] | str | None = None,
         json: dict[Any, Any] | list[Any] | None = None,
         params: str | dict[str, str] | None = None,
     ) -> Any: ...
@@ -175,8 +175,8 @@ class Reddit:
         self,
         path: str,
         *,
-        data: dict[str, str | Any] | bytes | IO | str | None = None,
-        files: dict[str, IO] | None = None,
+        data: dict[str, str | Any] | bytes | IO[AnyStr] | str | None = None,
+        files: dict[str, IO[AnyStr]] | None = None,
         json: dict[Any, Any] | list[Any] | None = None,
         params: str | dict[str, str] | None = None,
     ) -> Any: ...
@@ -185,7 +185,7 @@ class Reddit:
         self,
         path: str,
         *,
-        data: dict[str, str | Any] | bytes | IO | str | None = None,
+        data: dict[str, str | Any] | bytes | IO[AnyStr] | str | None = None,
         json: dict[Any, Any] | list[Any] | None = None,
     ) -> Any: ...
     @_deprecate_args("nsfw")
@@ -202,8 +202,8 @@ class Reddit:
     async def request(
         self,
         *,
-        data: dict[str, str | Any] | bytes | IO | str | None = None,
-        files: dict[str, IO] | None = None,
+        data: dict[str, str | Any] | bytes | IO[AnyStr] | str | None = None,
+        files: dict[str, IO[AnyStr]] | None = None,
         json: dict[Any, Any] | list[Any] | None = None,
         method: str,
         params: str | dict[str, str | int] | None = None,
@@ -217,6 +217,6 @@ class Reddit:
         *,
         fetch: bool = True,
         url: str | None = None,
-        **_,
+        **_: Any,
     ) -> asyncpraw.models.Submission: ...
     async def username_available(self, name: str) -> bool: ...

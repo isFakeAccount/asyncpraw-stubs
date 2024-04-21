@@ -25,11 +25,9 @@ class Comment(InboxableMixin, UserContentMixin, FullnameMixin, RedditBase):
     link_id: str
     parent_id: str
     permalink: str
-    replies: CommentForest
     saved: bool
     score: int
     stickied: bool
-    submission: Submission
     subreddit_id: str
     subreddit: Subreddit
 

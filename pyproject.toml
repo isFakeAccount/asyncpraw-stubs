@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncpraw-stubs"
-version = "0.0.2"
+version = "0.0.3"
 description = "Python stubs for AsyncPRAW, a python package that allows for simple access to Reddit's API asynchronously."
 authors = ["Yoshikage Kira"]
 license = "MIT"
