@@ -1,0 +1,26 @@
+"""Provide the RedditorListingMixin class."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, AsyncIterator
+
+from asyncpraw.models.listing.mixins.base import BaseListingMixin
+from asyncpraw.models.listing.mixins.gilded import GildedListingMixin
+from asyncpraw.util import cachedproperty
+
+if TYPE_CHECKING:
+    import asyncpraw.models
+
+class SubListing(BaseListingMixin):
+    def __init__(self, reddit: asyncpraw.Reddit, base_path: str, subpath: str) -> None: ...
+
+class RedditorListingMixin(BaseListingMixin, GildedListingMixin):
+    @cachedproperty
+    def comments(self) -> SubListing: ...
+    @cachedproperty
+    def submissions(self) -> SubListing: ...
+    def downvoted(self, **generator_kwargs: str | int | dict[str, str]) -> AsyncIterator[asyncpraw.models.Comment | asyncpraw.models.Submission]: ...
+    def gildings(self, **generator_kwargs: str | int | dict[str, str]) -> AsyncIterator[asyncpraw.models.Comment | asyncpraw.models.Submission]: ...
+    def hidden(self, **generator_kwargs: str | int | dict[str, str]) -> AsyncIterator[asyncpraw.models.Comment | asyncpraw.models.Submission]: ...
+    def saved(self, **generator_kwargs: str | int | dict[str, str]) -> AsyncIterator[asyncpraw.models.Comment | asyncpraw.models.Submission]: ...
+    def upvoted(self, **generator_kwargs: str | int | dict[str, str]) -> AsyncIterator[asyncpraw.models.Comment | asyncpraw.models.Submission]: ...
